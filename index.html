@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuantumSoft Technologies – Empower Digital Growth</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+        /* ================= GLOBAL STYLES ================= */
+
+    /* Use a clean modern font */
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+    body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    }
+
+      /* ---------- Hero wrapper ---------- */
+    .hero-section{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+    color:#fff;
+    }
+
+    /* ---------- Header sits above slides ---------- */
+    .main-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 28px;
+    background: rgba(0,0,0,0.35);
+    z-index: 999;
+    gap:12px;
+    }
+    .logo{width:180px; height:auto}
+
+    /* ---------- Nav (desktop) ---------- */
+    .navbar { display:flex; align-items:center; gap:12px; }
+    #nav-links {
+    list-style:none;
+    display:flex;
+    gap:12px;
+    margin:0;
+    padding:0;
+    align-items:center;
+    }
+    #nav-links li { position:relative; }
+    #nav-links a {
+    color:#fff;
+    text-decoration:none;
+    padding:8px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    }
+    #nav-links a:hover { background: rgba(255,255,255,0.08); border-radius:4px; }
+
+    /* ---------- Dropdown (desktop hover) ---------- */
+    .dropdown-content{
+    display:none;
+    position:absolute;
+    top: calc(100% + 8px);
+    left:0;
+    background: rgba(0,0,0,0.8);
+    min-width:220px;
+    border-radius:6px;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+    z-index: 1000;
+    }
+    .dropdown-content a{ display:block; padding:10px 14px; color:#fff; text-decoration:none; }
+    .dropdown-content a:hover{ background: rgba(255,255,255,0.04); }
+
+    /* show on hover (desktop) */
+    #nav-links li:hover > .dropdown-content { display:block; }
+
+    /* ---------- Hamburger for mobile ---------- */
+    .hamburger{
+    display:none;
+    background:transparent;
+    border:0;
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    padding:8px;
+    }
+    .hamburger:focus{ outline:2px solid #fff; outline-offset:3px; }
+
+    /* ---------- Slider ---------- */
+    .slider{
+      display:flex;
+      width:200%; /* two slides side-by-side (we animate translateX) */
+      height:100%;
+      animation: slideAnimation 10s infinite;
+      will-change: transform;
+    }
+    /* pause animation on hover */
+    .slider:hover { animation-play-state: paused; }
+
+    .slide{
+    flex: 0 0 50%; /* since slider width is 200%, each slide takes 50% => full viewport */
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    }
+    .slide::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45));
+    z-index:1;
+    }
+    .slide-content{ position:relative; z-index:2; padding: 0 24px; max-width:980px; }
+    .slide h1{ font-size: clamp(28px, 4vw, 48px); margin-bottom:12px; line-height:1.05; }
+    .slide p{ font-size: clamp(14px, 2vw, 20px); color: #f3f3f3; }
+
+    .slide1{ background-image:url('https://www.quantumsofttechnologies.com/img/Geospatial%20Services1.jpg'); }
+    .slide2{ background-image:url('https://www.quantumsofttechnologies.com/img/image%20(4).jpg'); }
+
+    @keyframes slideAnimation{
+      0%, 45% { transform: translateX(0); }
+      50%, 95% { transform: translateX(-50%); } /* move left by half the slider width */
+      100% { transform: translateX(0); }
+    }
+
+    /* ---------- Mobile styles ---------- */
+    @media (max-width: 900px){
+    .hamburger{ display:block; }
+    /* hide horizontal links, show mobile panel */
+    #nav-links{
+      position: absolute;
+      top: 64px;
+      right: 18px;
+      width: 220px;
+      flex-direction: column;
+      background: rgba(10,10,10,0.95);
+      border-radius:8px;
+      display:none; /* toggled by JS */
+      padding:8px 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+    #nav-links.show { display:flex; }
+
+    #nav-links a { padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.03); }
+    #nav-links li { width:100%; }
+
+    /* Dropdown becomes inline inside the flow on mobile */
+    .dropdown-content{
+      position:static;
+      display:none;
+      background:transparent;
+      box-shadow:none;
+      min-width: auto;
+      padding-left: 8px;
+    }
+    /* class that JS will add to open submenu */
+    .open > .dropdown-content { display:flex; flex-direction:column; }
+    .dropdown-content a { padding:10px 16px; color:#fff; }
+
+    /* keep header smaller on small screens */
+    .main-container{ padding:10px 14px; gap:8px; }
+    .logo{ width:140px; }
+    }
+
+    /* ---------- Content below ---------- */
+    .content{
+      padding:50px 18px;
+      text-align:center;
+      background:#fff;
+      color:#111;
+    }
+
+    /* small helper for keyboard focus */
+    a:focus { outline: 2px dashed rgba(255,255,255,0.4); outline-offset: 3px; }
+
+    /* ================= HERO SECTION ================= */
+    .hero {
+    background: url('https://www.quantumsofttechnologies.com/img/Geospatial%20Services1.jpg');
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 0 20px;
+    }
+
+    .hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    }
+
+    .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    }
+
+    /* ================= ABOUT SECTION ================= */
+    .section {
+    padding: 60px 0;
+    }
+
+    .about h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    }
+
+    .about p {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 40px;
+    color: #555;
+    }
+
+    /* Company stats */
+    .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    background:url('https://www.quantumsofttechnologies.com/img/Geospatial%20Services1.jpg') ;
+    gap: 20px;
+    }
+
+    .stat-box {
+
+    padding: 25px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    }
+
+    .stat-box:hover {
+    transform: translateY(-5px);
+    }
+
+    .stat-box h3 {
+    color: #ffffff;
+    margin-bottom: 10px;
+    }
+    .stat-box p {
+    color: #ffffff;
+    }
+    /* ================= SERVICES SECTION ================= */
+    .services h2 {
+    text-align: center;
+    }
+
+    .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+    }
+
+    .service-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+    }
+
+    .service-card:hover {
+    transform: translateY(-8px);
+    }
+
+    .service-card h3 {
+    color: #0056d2;
+    margin-bottom: 10px;
+    }
+    /* ================= EMPOWER DIGITAL GROWTH SECTION ================= */
+    
+    /* Section Layout */
+    .growth-section {
+    padding: 60px 10%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    /* Container splits image and text */
+    .growth-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
+    }
+
+    /* Image styling */
+    .growth-image {
+    flex: 1;
+    min-width: 300px;
+    }
+
+    .growth-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 5px solid #e8eefc;
+    }
+
+    /* Text styling */
+    .growth-content {
+    flex: 1;
+    min-width: 300px;
+    }
+
+    .growth-content h1 {
+    font-size: 2.8rem;
+    color: #0b1a48;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    }
+
+    .growth-content p {
+    color: #6f6f6f;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    }
+
+    .growth-content .brand {
+    color: #1841a0;
+    font-weight: 700;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+    .growth-container {
+    flex-direction: column;
+    text-align: center;
+    }
+
+    .growth-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .growth-content p {
+        font-size: 1rem;
+    }
+    }
+
+
+    /* ================= PROJECTS SECTION ================= */
+    .projects h2 {
+    text-align: center;
+    }
+
+    .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+    }
+
+    .project-card {
+    background: #f4f7ff;
+    padding: 25px;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+    transform: translateY(-5px);
+    }
+
+    /*============= FOOTER STYLING ======================*/
+    .footer {
+    background-color: #071945;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+    padding-top: 50px;
+    
+    }
+
+    /* Main container */
+    .footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0 8% 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Logo section */
+    .footer-logo img {
+    width: 180px;
+    margin-bottom: 20px;
+    }
+
+    /* Common list style */
+    .footer-links ul,
+    .footer-policies ul {
+    list-style: none;
+    }
+
+    .footer-links li,
+    .footer-policies li {
+    margin: 10px 0;
+    color: #f1f1f1;
+    cursor: pointer;
+    transition: color 0.3s;
+    }
+
+    .footer-links li:hover,
+    .footer-policies li:hover {
+    color: #4f8ff7;
+    }
+
+    .footer-links i,
+    .footer-policies i {
+    color: #4f8ff7;
+    margin-right: 8px;
+    }
+
+    /* Contact section */
+    .footer-contact {
+    max-width: 300px;
+    }
+
+    .footer-contact p {
+    margin: 8px 0;
+    color: #e0e0e0;
+    }
+
+    .footer-contact a {
+    color: #ffffff;
+    text-decoration: none;
+    }
+
+    .footer-contact a:hover {
+    color: #4f8ff7;
+    }
+
+    .footer-contact i {
+    color: #4f8ff7;
+    margin-right: 8px;
+    }
+
+    /* Bottom bar */
+    .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background-color: #051433;
+    flex-wrap: wrap;
+    }
+
+    .footer-bottom p {
+    color: #ccc;
+    font-size: 0.95rem;
+    }
+
+    .footer-bottom span {
+    color: #4f8ff7;
+    font-weight: 600;
+    }
+
+    /* Social Icons */
+    .social-icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #1d3b86;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+    transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+    background-color: #4f8ff7;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+    .footer-container {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+    }
+
+    .footer-bottom {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    }
+
+    .social-icons {
+    margin-top: 10px;
+    }
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <section class="hero-section" aria-label="Hero">
+  <header class="main-container">
+    <img class="logo" src="https://www.quantumsofttechnologies.com/img/logo.png" alt="QuantumSoft Technologies logo">
+
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger" id="hamburgerBtn" aria-controls="nav-links" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <!-- Nav -->
+    <nav class="navbar" aria-label="Primary">
+      <ul id="nav-links" role="menubar">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="#">About<i class="fa fa-angle-down"></i></a>
+            <div class="dropdown-content">
+                <a href="#"><i class="fas fa-code"></i> About us</a>
+                <a href="#"><i class="fas fa-mobile-alt"></i> Our Leadership</a>
+            </div>
+        </li>
+        <li>
+            <a href="#">Testimonials<i class="fa fa-angle-down"></i></a>
+            <div class="dropdown-content">
+                <a href="#"><i class="fas fa-code"></i> Employee Testimonials</a>
+            </div>
+        </li>
+        <li>
+          <a href="#">Services<i class="fa fa-angle-down"></i></a>
+          <div class="dropdown-content">
+            <a href="#"><i class="fas fa-code"></i> Web Development</a>
+            <a href="#"><i class="fas fa-mobile-alt"></i> App Development</a>
+            <a href="#"><i class="fas fa-bug"></i> Software Testing</a>
+            <a href="#"><i class="fas fa-briefcase"></i> Business Consulting</a>
+            <a href="#"><i class="fas fa-pencil-alt"></i> Digital Marketing</a>
+            <a href="#"><i class="fas fa-palette"></i> UI/UX Design</a>
+            <a href="#"><i class="fas fa-shield-alt"></i> Cyber Security</a>
+            <a href="#"><i class="fas fa-database"></i> GIS Services</a>
+            <a href="#"><i class="fas fa-map-marker-alt"></i> GPS Services</a>
+          </div>
+        </li>
+        <li>
+            <a href="#">Blogs & News</a>
+        </li>
+        <li>
+            <a href="#">Careers</a>
+        </li>
+        <li>
+            <a href="#">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Slider (two slides) -->
+  <div class="slider" >
+    <div class="slide slide1">
+      <div class="slide-content">
+        <h1>Transforming Ideas Into Reality.</h1>
+        <p>Turning bold ideas into powerful solutions.<br>We bring innovation to life, one line of code at a time.</p>
+      </div>
+    </div>
+
+    <div class="slide slide2">
+      <div class="slide-content">
+        <h1>Empowering Innovation, Delivering Excellence.</h1>
+        <p>Engineering tomorrow’s technology, today’s solutions.<br>Innovating with passion, coding with precision.</p>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  
+  <!-- ================= SERVICES SECTION ================= -->
+  <section id="services" class="services section">
+    <div class="container">
+      
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>Innovation and Technology</h3>
+          <p>Lead in developing cutting-edge solutions, 
+            whether in software development, hardware advancements, or technological services.
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Global Reach and Impact</h3>
+          <p>Products and services often transcend geographical boundaries, 
+            influencing how businesses and individuals operate.
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Human Capital and Skills</h3>
+          <p>We believe in building a strong workforce while 
+            nurturing & empowering 
+            talent. By fostering a culture of continuous learning & development.
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Challenges and Opportunities</h3>
+          <p>Organizations today face challenges like attracting the right talent, retaining 
+            key employees, addressing skill gaps, and fostering diversity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+                        <!-- growth-section -->
+    <section class="growth-section">
+    <div class="growth-container">
+        <!-- Left side: Image -->
+        <div class="growth-image">
+         <img src="https://www.quantumsofttechnologies.com/img/About-Us01%20(499%20kb).jpeg" alt="Team working together">
+        </div>
+
+        <!-- Right side: Text -->
+        <div class="growth-content">
+        <h1>Empower Digital Growth<br>With Technology</h1>
+        <p>
+            At <span class="brand">QuantumSoft Technologies</span> we partner with
+            businesses to drive digital growth. Our expertise in cloud computing,
+            AI, data analytics, automation, and enterprise solutions enables
+            organizations to modernize operations, enhance customer experiences,
+            and achieve sustainable success. With a future-ready approach, we help
+            companies embrace innovation, improve efficiency, and lead in the
+            digital age.
+        </p>
+        </div>
+    </div>
+    </section>
+
+  <!-- ================= ABOUT SECTION ================= -->
+  <section id="about" class="about section">
+    <div class="container">
+      
+      <!-- Company Stats -->
+      <div class="stats">
+        <div class="stat-box">
+          <h3>500+</h3>
+          <p>Happy Clients</p>
+        </div>
+        <div class="stat-box">
+          <h3>150+</h3>
+          <p>Projects Delivered</p>
+        </div>
+        <div class="stat-box">
+          <h3>1000+</h3>
+          <p>Employees</p>
+        </div>
+        <div class="stat-box">
+          <h3>4+</h3>
+          <p>Years Experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES SECTION ================= -->
+  <section id="services" class="services section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <h3>Web Development</h3>
+          <p>We deliver smart, user-focused web solutions with intuitive design and clean,
+            scalable code. Our websites and applications are built for performance, security,
+            and ease of use—helping businesses engage users, achieve goals, and drive 
+            measurable growth.​
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>App Development</h3>
+          <p>We build high-performance mobile apps with sleek design, powerful features, and 
+            seamless user experience. From Android to iOS, our secure, scalable solutions 
+            help drive engagement and business growth.​
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Software Development</h3>
+          <p>We build scalable, secure, and high-performing software solutions tailored to your
+            business needs—streamlining operations and driving growth with clean, future-ready
+            technology.​​
+          </p>
+        </div>
+        <div class="service-card">
+          <h3>Software Testing</h3>
+          <p>We ensure your software is reliable, secure, and bug-free through 
+            rigorous manual and automated testing. Our QA experts help deliver
+            high-quality products by identifying issues early and enhancing
+            performance, usability, and stability.​​
+
+          </p>
+        </div>
+         <div class="service-card">
+          <h3>Cyber Security​</h3>
+          <p>We protect your digital assets with advanced cybersecurity solutions.
+             From threat detection and risk assessment to data protection and 
+            compliance, our services ensure your systems stay secure, resilient, 
+            and one step ahead of evolving cyber threats.
+          </p>
+        </div>
+         <div class="service-card">
+          <h3>UI/UX DESIGN​</h3>
+          <p>We craft intuitive and visually engaging UI/UX designs that enhance user
+            satisfaction and drive interaction. Our design approach blends creativity
+            with usability to deliver seamless digital experiences across web and mobile
+            platforms.​
+          </p>
+        </div>
+         <div class="service-card">
+          <h3>Cloud Services​​</h3>
+          <p>We offer reliable and scalable cloud solutions that optimize performance,
+            enhance security, and reduce infrastructure costs. We help businesses harness
+            the full power of AWS, Azure, and other leading platforms.​
+          </p>
+        </div>
+         <div class="service-card">
+          <h3>Business Consulting​</h3>
+          <p>Our business consulting services help you make smarter decisions,
+            streamline operations, and drive growth. We combine industry insights
+            with strategic thinking to deliver solutions that align with your goals
+            and maximize ROI.​
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS SECTION ================= -->
+  <section id="projects" class="projects section">
+    <div class="container">
+      <h2>Featured Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h4>Hotel Booking Prediction</h4>
+          <p>AI-based prediction model to forecast booking cancellations.</p>
+        </div>
+        <div class="project-card">
+          <h4>Quiz Learning App</h4>
+          <p>Interactive quiz platform with analytics for learners and educators.</p>
+        </div>
+        <div class="project-card">
+          <h4>E-Commerce Platform</h4>
+          <p>Powerful online store solution with seamless checkout experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+          <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Logo -->
+      <div class="footer-logo">
+        <img src="https://www.quantumsofttechnologies.com/img/logo.png" alt="QuantumSoft Technologies Logo">
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="footer-links">
+        <ul>
+          <li><i class="fa fa-angle-right"></i> Home</li>
+          <li><i class="fa fa-angle-right"></i> About</li>
+          <li><i class="fa fa-angle-right"></i> Testimonials</li>
+          <li><i class="fa fa-angle-right"></i> Services</li>
+          <li><i class="fa fa-angle-right"></i> Blogs & News</li>
+          <li><i class="fa fa-angle-right"></i> Careers</li>
+          <li><i class="fa fa-angle-right"></i> Contact</li>
+        </ul>
+      </div>
+
+      <!-- Policies -->
+      <div class="footer-policies">
+        <ul>
+          <li><i class="fa fa-angle-right"></i> Terms & Conditions</li>
+          <li><i class="fa fa-angle-right"></i> Privacy Policy</li>
+          <li><i class="fa fa-angle-right"></i> Fraud Alerts</li>
+          <li><i class="fa fa-angle-right"></i> Help & FAQs</li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-contact">
+        <p><i class="fa fa-map-marker"></i> Office No. 6010, 6th Floor, A,<br>
+          Solitaire Business Hub, near Phoenix Mall,<br>
+          Viman Nagar, Pune, Maharashtra 411014
+        </p>
+        <p><a href="mailto:contact@quantumsofttechnologies.com">contact@quantumsofttechnologies.com</a></p>
+        <p><a href="tel:+918793059562">+91-8793059562</a></p>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p>© <span>QuantumSoft Technologies</span> All rights reserved.</p>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-square-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  <script>
+   const toggle = document.querySelector('.menu-toggle');
+   const navLinks = document.querySelector('.nav-links');
+  
+   toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+   });
+  </script>
+
+</body>
+</html>
